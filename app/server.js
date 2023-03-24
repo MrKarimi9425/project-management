@@ -1,3 +1,5 @@
+const { allRoutes } = require("./routers/router");
+
 module.exports = class Application {
     #express = require("express");
     #app = this.#express();
@@ -36,15 +38,15 @@ module.exports = class Application {
             return res.status(404).json({
                 status: 404,
                 message: "آدرس موردنظر یافت نشد"
-            })
+            });
         })
-        this.#app.use((error, res, req, next) => {
+        this.#app.use((error, req, res, next) => {
             const status = error?.status || error?.statusCode || 500;
             const message = error?.message || "InternalServerError";
-            res.status(status).json({
+            return res.status(status).json({
                 status,
                 message
-            })
+            });
         })
     }
     createRoutes() {
@@ -53,5 +55,12 @@ module.exports = class Application {
                 message: "this is my first application with node js"
             })
         })
+        this.#app.use(allRoutes);
+        // this.#app.use((err, req, res, next) => {
+        //     try {
+        //     } catch (error) {
+        //         next(error)
+        //     }
+        // })
     }
 }
