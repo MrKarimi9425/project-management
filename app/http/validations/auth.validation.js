@@ -35,12 +35,15 @@ function registerValidation() {
 }
 function loginValidation() {
     return [
-        body("username").isEmpty().withMessage("نام کاربری نمی تواند خالی باشد").custom(async username => {
-            const usernameRegex = /^[a-z]+[a-z0-9\_\.]{3,}/gi
-            if (usernameRegex.test(username)) {
-                return true;
+        body("username").custom(async username => {
+            if (username) {
+                const usernameRegex = /^[a-z]+[a-z0-9\_\.]{3,}/gi
+                if (usernameRegex.test(username)) {
+                    return true;
+                }
+                throw "نام کاربری وارد شده صحیح نمی باشد";
             }
-            throw "نام کاربری وارد شده صحیح نمی باشد";
+            throw "نام کاربری نمی تواند خالی باشد";
         }),
         body("password").isLength({ min: 6, max: 16 }).withMessage("کلمه عبور باید حداقل 6 و حداکثر 16 کاراکتر باشد")
     ]

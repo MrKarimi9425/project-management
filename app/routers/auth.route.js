@@ -5,7 +5,7 @@ const { registerValidation, loginValidation } = require("../http/validations/aut
 const router = require("express").Router();
 
 router.post("/register", registerValidation(), expressValidationMapper, AuthController.register)
-router.post("/login",  AuthController.login)
+router.post("/login", loginValidation(), expressValidationMapper, AuthController.login)
 module.exports = {
     authRouters: router
 }
