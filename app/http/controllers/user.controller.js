@@ -24,7 +24,6 @@ class UserController {
                 if (badValues.includes(value)) delete data[key]
             })
             const result = await userModel.updateOne({ _id: userId }, { $set: data });
-            console.log(result)
             if (!result.modifiedCount > 0) throw { status: 401, message: "بروزرسانی انجام نشد" };
             return res.status(200).json({
                 status: 200,
@@ -37,7 +36,6 @@ class UserController {
     async uploadProfileImage(req, res, next) {
         try {
             const { _id } = req.user;
-            if (Object.keys(req?.file ?? {}).length == 0) throw { status: 400, message: "لطفا یک تصویر انتخاب کنید" };
             const { path } = req?.file;
             const imagePath = path?.substring(7);
             const result = await userModel.updateOne({ _id }, { $set: { profile_image: imagePath } })
