@@ -9,7 +9,8 @@ const userScheme = new mongoose.Schema({
     password: { type: String, required: true },
     email: { type: String, required: true, unique: true },
     Skills: { type: [String], default: [] },
-    teams: { type: [mongoose.Types.ObjectId], default: [] }
+    teams: { type: [mongoose.Types.ObjectId], default: [] },
+    profile_image: { type: String, required: false }
 }, {
     timestamps: true
 });

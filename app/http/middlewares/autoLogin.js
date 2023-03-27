@@ -9,7 +9,6 @@ const checkLogin = async (req, res, next) => {
         const token = authorization.split(" ")?.[1];
         if (!token) throw { status: 401, message: authError };
         const result = verifyJwtToken(token);
-        console.log("result", result)
         const { username } = result;
         const user = await userModel.findOne({ username }, { password: 0 })
         if (!user) throw { status: 401, message: authError };
